@@ -12,11 +12,20 @@ class Itau
 		@trailer 		= ItauTrailer.new(File.open(file_path).to_a.last)
 
 		@details		= []
+		self.fill_details
 
-		details_string_tmp = File.open(file_path).to_a
-		details_string_tmp.shift
-		details_string_tmp.pop
 		
-		@details_string	= details_string_tmp.join("")
+	end
+
+	def fill_details
+		details_tmp = File.open(file_path).to_a
+		details_tmp.shift
+		details_tmp.pop
+		
+		@details_string	= details_tmp.join("")
+
+		details_tmp.each do |d|
+			@details.push ItauDetail.new(d)
+		end
 	end
 end

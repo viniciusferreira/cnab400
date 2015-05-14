@@ -74,9 +74,67 @@ class Cnab400ItauTest < Minitest::Unit::TestCase
         expected_details = "10219468242000132893300133921                                 00000215            157000002155             I06110515          00000215            000000000000002500003339776  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B2000002\n10219468242000132893300133921                                 00000217            157000002171             I06110515          00000217            000000000000002500003335220  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B3000003\n10219468242000132893300133921                                 00000218            157000002189             I06110515          00000218            000000000000002500023727813  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B2000004\n10219468242000132893300133921                                 00000219            157000002197             I06110515          00000219            000000000000002500010422707  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B3000005\n10219468242000132893300133921                                 00000221            157000002213             I06110515          00000221            000000000000002500034174997  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    BL000006\n10219468242000132893300133921                                 00000229            157000002296             I06110515          00000229            000000000000002500074500018  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B3000007\n10219468242000132893300133921                                 00000231            157000002312             I06110515          00000231            000000000000002500034138315  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    BL000008\n"
         
         ret = Cnab400::Ret.new( File.join( File.dirname(__FILE__), "ret", "CN11055A.RET" ) )
-        byebug
+        
         assert_equal expected_details, ret.itau.details_string
         
     end
 
+    def test_if_details_contain_necessary_info
+        first_expected_detail_string = "10219468242000132893300133921                                 00000215            157000002155             I06110515          00000215            000000000000002500003339776  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B2000002\n"
+
+        first_expected_detail = {
+            :register_type          => "1",
+            :registration_code      => "02",
+            :registration_number    => "468242000132",
+            :identifier             => "00000215",
+            :identifier_code        => "5",
+            :occurrence_date        => "110515",
+            :document_number        => "          ",
+            :credit_date            => "120515",
+            :amount                 => "0000000025000"
+
+        }
+
+        second_expected_detail_string = "10219468242000132893300133921                                 00000217            157000002171             I06110515          00000217            000000000000002500003335220  000000000000000000000000000000000000000000000000000000000000000000000000000000000000002500000000000000000000000000000   12051500000000000000000000000                                                                    B3000003\n"
+
+        second_expected_detail = {
+            :register_type          => "1",
+            :registration_code      => "02",
+            :registration_number    => "468242000132",
+            :identifier             => "00000217",
+            :identifier_code        => "1",
+            :occurrence_date        => "110515",
+            :document_number        => "          ",
+            :credit_date            => "120515",
+            :amount                 => "0000000025000"
+        }
+
+        ret = Cnab400::Ret.new( File.join( File.dirname(__FILE__), "ret", "CN11055A.RET" ) )
+        
+        
+        assert_equal ret.itau.details[0].detail_string, first_expected_detail_string
+
+        assert_equal ret.itau.details[0].register_type, first_expected_detail[:register_type]
+        assert_equal ret.itau.details[0].registration_code, first_expected_detail[:registration_code]
+        assert_equal ret.itau.details[0].registration_number, first_expected_detail[:registration_number]
+        assert_equal ret.itau.details[0].identifier, first_expected_detail[:identifier]
+        assert_equal ret.itau.details[0].identifier_code, first_expected_detail[:identifier_code]
+        assert_equal ret.itau.details[0].occurrence_date, first_expected_detail[:occurrence_date]
+        assert_equal ret.itau.details[0].document_number, first_expected_detail[:document_number]
+        assert_equal ret.itau.details[0].credit_date, first_expected_detail[:credit_date]
+        assert_equal ret.itau.details[0].amount, first_expected_detail[:amount]
+        
+        assert_equal ret.itau.details[1].detail_string, second_expected_detail_string
+
+        assert_equal ret.itau.details[1].register_type, second_expected_detail[:register_type]
+        assert_equal ret.itau.details[1].registration_code, second_expected_detail[:registration_code]
+        assert_equal ret.itau.details[1].registration_number, second_expected_detail[:registration_number]
+        assert_equal ret.itau.details[1].identifier, second_expected_detail[:identifier]
+        assert_equal ret.itau.details[1].identifier_code, second_expected_detail[:identifier_code]
+        assert_equal ret.itau.details[1].occurrence_date, second_expected_detail[:occurrence_date]
+        assert_equal ret.itau.details[1].document_number, second_expected_detail[:document_number]
+        assert_equal ret.itau.details[1].credit_date, second_expected_detail[:credit_date]
+        assert_equal ret.itau.details[1].amount, second_expected_detail[:amount]        
+
+    end
 end
