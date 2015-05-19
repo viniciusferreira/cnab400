@@ -91,7 +91,10 @@ class Cnab400ItauTest < Minitest::Unit::TestCase
             :occurrence_date        => "110515",
             :document_number        => "          ",
             :credit_date            => "120515",
-            :amount                 => "0000000025000"
+            :amount                 => "0000000025000",
+            :liquidation_bank_number => "033",
+            :liquidation_agency_number => "3977",
+            :liquidation_agency_digit => "6"
 
         }
 
@@ -106,7 +109,10 @@ class Cnab400ItauTest < Minitest::Unit::TestCase
             :occurrence_date        => "110515",
             :document_number        => "          ",
             :credit_date            => "120515",
-            :amount                 => "0000000025000"
+            :amount                 => "0000000025000",
+            :liquidation_bank_number => "033",
+            :liquidation_agency_number => "3522",
+            :liquidation_agency_digit => "0"
         }
 
         ret = Cnab400::Ret.new( File.join( File.dirname(__FILE__), "ret", "CN11055A.RET" ) )
@@ -123,6 +129,9 @@ class Cnab400ItauTest < Minitest::Unit::TestCase
         assert_equal ret.itau.details[0].document_number, first_expected_detail[:document_number]
         assert_equal ret.itau.details[0].credit_date, first_expected_detail[:credit_date]
         assert_equal ret.itau.details[0].amount, first_expected_detail[:amount]
+        assert_equal ret.itau.details[0].liquidation_bank_number, first_expected_detail[:liquidation_bank_number]
+        assert_equal ret.itau.details[0].liquidation_agency_number, first_expected_detail[:liquidation_agency_number]
+        assert_equal ret.itau.details[0].liquidation_agency_digit, first_expected_detail[:liquidation_agency_digit]
         
         assert_equal ret.itau.details[1].detail_string, second_expected_detail_string
 
@@ -135,6 +144,9 @@ class Cnab400ItauTest < Minitest::Unit::TestCase
         assert_equal ret.itau.details[1].document_number, second_expected_detail[:document_number]
         assert_equal ret.itau.details[1].credit_date, second_expected_detail[:credit_date]
         assert_equal ret.itau.details[1].amount, second_expected_detail[:amount]        
+        assert_equal ret.itau.details[1].liquidation_bank_number, second_expected_detail[:liquidation_bank_number]
+        assert_equal ret.itau.details[1].liquidation_agency_number, second_expected_detail[:liquidation_agency_number]
+        assert_equal ret.itau.details[1].liquidation_agency_digit, second_expected_detail[:liquidation_agency_digit]
 
     end
 end

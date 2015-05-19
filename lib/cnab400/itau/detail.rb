@@ -10,6 +10,10 @@ class ItauDetail
     attr_accessor :document_number
     attr_accessor :credit_date
     attr_accessor :amount
+    
+    attr_accessor :liquidation_bank_number
+    attr_accessor :liquidation_agency_number
+    attr_accessor :liquidation_agency_digit
 
     def initialize(detail)
         @detail_string          = detail
@@ -23,5 +27,8 @@ class ItauDetail
         @document_number        = detail[116..125]
         @credit_date            = detail[295..300]
         @amount                 = detail[152..164]
+        @liquidation_bank_number = detail[165..167]
+        @liquidation_agency_number = detail[168..171]
+        @liquidation_agency_digit = detail[172]
     end
 end

@@ -4,8 +4,8 @@
 
 Gem::Specification.new do |gem|
   gem.name          = "cnab400"
-  gem.version       = "0.0.1"
-  gem.date          = "2015-05-14"
+  gem.version       = "0.0.2"
+  gem.date          = "2015-05-18"
   gem.authors       = ["Felipe Pavão"]
   gem.email         = ["contact@felipepavao.com"]
   gem.homepage        = "https://github.com/felipepavao/cnab400"
